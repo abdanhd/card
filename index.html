@@ -19,7 +19,7 @@
             position: relative;
             text-align: center;
         }
-        .pack, .card {
+        .pack, .card-wrapper {
             width: 200px;
             height: 300px;
             cursor: pointer;
@@ -28,19 +28,42 @@
         .pack {
             background: url('Evolving Bonds.jpg') no-repeat center/cover;
         }
-        .card {
-            background: url('pokemon_card_backside.jpg') no-repeat center/cover;
+        .card-wrapper {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%) scale(0.5);
             opacity: 0;
-            box-shadow: 0 0 20px rgba(255, 255, 0, 0.5);
+            perspective: 1000px;
+        }
+        .card {
+            width: 200px;
+            height: 300px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            animation: pulseGlow 1.5s infinite alternate ease-in-out;
+        }
+        .card .front, .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background-size: cover;
+        }
+        .card .front {
+            background: url('pokemon_card_backside.jpg') no-repeat center/cover;
+        }
+        .card .back {
+            background: url('pokemon_card_backside.jpg') no-repeat center/cover;
+            transform: rotateY(180deg);
+        }
+        .card.flipped {
+            transform: rotateY(180deg);
         }
         .card.glow {
             opacity: 1;
             transform: translateX(-50%) scale(1);
-            animation: pulseGlow 1.5s infinite alternate ease-in-out;
         }
         @keyframes pulseGlow {
             0% {
@@ -67,7 +90,12 @@
     <div class="container" onclick="openPack()">
         <div class="tap-text" id="tapText">Tap to open</div>
         <div class="pack" id="pack"></div>
-        <div class="card" id="card"></div>
+        <div class="card-wrapper" id="cardWrapper">
+            <div class="card" id="card" onclick="flipCard()">
+                <div class="front"></div>
+                <div class="back"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -76,8 +104,14 @@
             document.getElementById("pack").style.transform = "scale(0.5)";
             document.getElementById("pack").style.opacity = "0";
             setTimeout(() => {
+                document.getElementById("cardWrapper").classList.add("glow");
                 document.getElementById("card").classList.add("glow");
             }, 600);
+        }
+
+        function flipCard() {
+            const card = document.getElementById("card");
+            card.classList.toggle("flipped");
         }
     </script>
 </body>
