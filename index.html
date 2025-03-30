@@ -121,17 +121,26 @@
     </div>
 
     <script>
+        let hasSpun = false;
+        let hasConfettiTriggered = false;
+
         function openPack() {
             document.getElementById("tapText").classList.add("hidden");
             document.getElementById("pack").style.transform = "scale(0.5)";
             document.getElementById("pack").style.opacity = "0";
             setTimeout(() => {
                 const card = document.getElementById("card");
-                card.style.animation = "spinCard 1s linear";
+                if (!hasSpun) {
+                    card.style.animation = "spinCard 1s linear";
+                    hasSpun = true;
+                }
                 document.getElementById("cardWrapper").style.opacity = "1";
                 document.getElementById("cardWrapper").style.transform = "translate(-50%, -50%) scale(1)";
                 setTimeout(() => {
-                    triggerConfetti();
+                    if (!hasConfettiTriggered) {
+                        triggerConfetti();
+                        hasConfettiTriggered = true;
+                    }
                     setTimeout(() => {
                         card.style.animation = "pulseGlow 1.5s infinite alternate ease-in-out";
                     }, 2000);
