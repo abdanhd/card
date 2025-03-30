@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack Opening Animation</title>
+    <style>
+        /* Styling for the body to center content */
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #222; overflow: hidden; margin: 0; flex-direction: column; }
+        
+        /* Splash screen */
+        .splash-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, rgba(255,255,255,1) 10%, rgba(255,255,255,0) 70%);
+            display: flex; align-items: center; justify-content: center; color: black; font-size: 24px;
+            font-weight: bold; animation: fadeOut 2s forwards 2s; z-index: 10;
+        }
+        
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        /* Instruction text */
+        .instruction { color: white; font-size: 18px; margin-bottom: 10px; text-align: center; transition: opacity 0.5s; }
+        
+        /* Container for pack and cards */
+        .container { position: relative; text-align: center; width: 100vw; max-width: 400px; }
+        
+        /* Styling for the card pack */
+        .pack { width: 80%; max-width: 200px; cursor: pointer; transition: transform 0.5s, opacity 0.5s; position: absolute; left: 50%; transform: translateX(-50%); }
+        .pack.torn { transform: translateX(100vw); opacity: 0; pointer-events: none; }
+        
+        /* Container for the card */
+        .card-container { position: relative; width: 100vw; max-width: 400px; height: 60vh; display: flex; align-items: center; justify-content: center; visibility: hidden; }
+        
+        /* Card styling */
+        .card { width: 60vw; max-width: 200px; height: 80vw; max-height: 300px; background: gray; border-radius: 8px; transition: opacity 0.5s, transform 0.5s; transform-style: preserve-3d; position: absolute; opacity: 0; }
+        .card.active { opacity: 1; animation: glow 1.5s infinite alternate, swirl 3s ease-in-out infinite; }
+        
+        /* Front and back styling for the card */
+        .card .front, .card .back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px;
+        }
+        .card .front { transform: rotateY(180deg); background: url('https://photos.fife.usercontent.google.com/pw/AP1GczO4-BBHkKnHd6s2BMXCBumVVtIUaOmtAHApx-YIRvCs0W2L1HU6NCBFow=w159-h220-no?authuser=0') no-repeat center; background-size: cover; }
+        .card .back { background: url('https://via.placeholder.com/100x150?text=Back') no-repeat center; background-size: cover; }
+        
+        /* Glowing SSR effect */
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px gold; }
+            100% { box-shadow: 0 0 30px gold, 0 0 50px orange; }
+        }
+        
+        /* Swirling effect */
+        @keyframes swirl {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+            100% { transform: rotate(-10deg); }
+        }
+        
+        /* Glitter effect */
+        .glitter {
+            position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 10%, rgba(255,255,255,0) 70%) center;
+            animation: glitter-animation 1.5s infinite alternate;
+        }
+        
+        @keyframes glitter-animation {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash screen -->
+    <div class="splash-screen">Majestic Pack Opening</div>
+    
+    <!-- Instruction text -->
+    <div class="instruction" id="instruction">Tap the card pack to open</div>
+    
+    <div class="container">
+        <!-- Image representing the card pack -->
+        <img src="https://photos.fife.usercontent.google.com/pw/AP1GczO4-BBHkKnHd6s2BMXCBumVVtIUaOmtAHApx-YIRvCs0W2L1HU6NCBFow=w159-h220-no?authuser=0" class="pack" id="pack" alt="Pack">
+        
+        <!-- Container for the opened card -->
+        <div class="card-container" id="cardContainer">
+            <div class="card active">
+                <div class="back"></div>
+                <div class="front"></div>
+                <div class="glitter"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const pack = document.getElementById("pack");
+        const cardContainer = document.getElementById("cardContainer");
+        const instruction = document.getElementById("instruction");
+        
+        // Detect tap gesture to open the pack
+        pack.addEventListener("click", () => {
+            pack.classList.add("torn"); // Hide the pack after opening
+            instruction.style.opacity = "0"; // Hide instruction text
+            setTimeout(() => {
+                instruction.style.display = "none"; // Remove instruction from layout
+                cardContainer.style.visibility = "visible"; // Show the single card
+            }, 500);
+        });
+    </script>
+</body>
+</html>
