@@ -35,8 +35,9 @@
             transform: translateX(-50%) scale(0.5);
             opacity: 0;
             perspective: 1000px;
+            transition: opacity 0.6s, transform 0.6s;
         }
-        .card .front, .card .back {
+        .card {
             width: 200px;
             height: 300px;
             position: relative;
@@ -104,8 +105,9 @@
             document.getElementById("pack").style.transform = "scale(0.5)";
             document.getElementById("pack").style.opacity = "0";
             setTimeout(() => {
-                document.getElementById("cardWrapper").classList.add("glow");
-                document.getElementById("card").classList.add("glow");
+                const cardWrapper = document.getElementById("cardWrapper");
+                cardWrapper.style.opacity = "1";
+                cardWrapper.style.transform = "translateX(-50%) scale(1)";
             }, 600);
         }
 
