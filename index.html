@@ -21,21 +21,13 @@
         
         .instruction { color: white; font-size: 18px; margin-bottom: 10px; text-align: center; transition: opacity 0.5s; }
         
-        .container { position: relative; text-align: center; width: 100vw; max-width: 1200px; }
+        .container { position: relative; text-align: center; width: 100vw; max-width: 800px; }
         
-        .pack { width: 150%; max-width: 900px; cursor: pointer; transition: transform 0.5s, opacity 0.5s; position: absolute; left: 50%; transform: translateX(-50%); }
+        .pack { width: 100%; max-width: 400px; cursor: pointer; transition: transform 0.5s, opacity 0.5s; position: absolute; left: 50%; transform: translateX(-50%); }
         .pack.torn { transform: translateX(100vw); opacity: 0; pointer-events: none; }
         
-        .card-container { position: relative; width: 100vw; max-width: 1200px; height: 80vh; display: flex; align-items: center; justify-content: center; visibility: hidden; }
-        
-        .card { width: 150vw; max-width: 900px; height: 225vw; max-height: 1350px; background: gray; border-radius: 8px; transition: opacity 0.5s; transform-style: preserve-3d; position: absolute; opacity: 0; }
+        .card { width: 100%; max-width: 400px; height: auto; border-radius: 8px; transition: opacity 0.5s; position: absolute; opacity: 0; }
         .card.active { opacity: 1; }
-        
-        .card .front, .card .back {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px;
-        }
-        .card .front { transform: rotateY(180deg); background: url('pokemon_card_backside.jpg') no-repeat center; background-size: cover; }
-        .card .back { background: url('https://via.placeholder.com/100x150?text=Back') no-repeat center; background-size: cover; }
         
     </style>
 </head>
@@ -45,28 +37,20 @@
     <div class="instruction" id="instruction">Tap the card pack to open</div>
     
     <div class="container">
-        <img src="pokemon_card_backside.jpg" class="pack" id="pack" alt="Pack">
-        
-        <div class="card-container" id="cardContainer">
-            <div class="card" id="card">
-                <div class="back"></div>
-                <div class="front"></div>
-            </div>
-        </div>
+        <img src="pokemon_card_backside.jpg" class="pack" id="card_pack" alt="Pack">
+        <img src="pokemon_card_backside.jpg" class="card" id="card" alt="Card">
     </div>
     
     <script>
-        const pack = document.getElementById("pack");
-        const cardContainer = document.getElementById("cardContainer");
+        const card_pack = document.getElementById("card_pack");
         const instruction = document.getElementById("instruction");
         const card = document.getElementById("card");
         
-        pack.addEventListener("click", () => {
-            pack.classList.add("torn");
+        card_pack.addEventListener("click", () => {
+            card_pack.classList.add("torn");
             instruction.style.opacity = "0";
             setTimeout(() => {
                 instruction.style.display = "none";
-                cardContainer.style.visibility = "visible";
                 card.classList.add("active");
             }, 500);
         });
