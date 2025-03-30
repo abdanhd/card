@@ -21,15 +21,15 @@
         
         .instruction { color: white; font-size: 18px; margin-bottom: 10px; text-align: center; transition: opacity 0.5s; }
         
-        .container { position: relative; text-align: center; width: 100vw; max-width: 800px; }
+        .container { position: relative; text-align: center; width: 100vw; max-width: 1200px; }
         
-        .pack { width: 100%; max-width: 600px; cursor: pointer; transition: transform 0.5s, opacity 0.5s; position: absolute; left: 50%; transform: translateX(-50%); }
+        .pack { width: 150%; max-width: 900px; cursor: pointer; transition: transform 0.5s, opacity 0.5s; position: absolute; left: 50%; transform: translateX(-50%); }
         .pack.torn { transform: translateX(100vw); opacity: 0; pointer-events: none; }
         
-        .card-container { position: relative; width: 100vw; max-width: 800px; height: 80vh; display: flex; align-items: center; justify-content: center; visibility: hidden; }
+        .card-container { position: relative; width: 100vw; max-width: 1200px; height: 80vh; display: flex; align-items: center; justify-content: center; visibility: hidden; }
         
-        .card { width: 160vw; max-width: 600px; height: 200vw; max-height: 900px; background: gray; border-radius: 8px; transition: opacity 0.5s; transform-style: preserve-3d; position: absolute; opacity: 0; }
-        .card.active { opacity: 1; animation: glow 1.5s infinite alternate; }
+        .card { width: 150vw; max-width: 900px; height: 225vw; max-height: 1350px; background: gray; border-radius: 8px; transition: opacity 0.5s; transform-style: preserve-3d; position: absolute; opacity: 0; }
+        .card.active { opacity: 1; }
         
         .card .front, .card .back {
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px;
@@ -37,10 +37,6 @@
         .card .front { transform: rotateY(180deg); background: url('pokemon_card_backside.jpg') no-repeat center; background-size: cover; }
         .card .back { background: url('https://via.placeholder.com/100x150?text=Back') no-repeat center; background-size: cover; }
         
-        @keyframes glow {
-            0% { box-shadow: 0 0 20px gold; }
-            100% { box-shadow: 0 0 60px gold, 0 0 100px orange; }
-        }
     </style>
 </head>
 <body>
