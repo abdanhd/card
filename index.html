@@ -35,27 +35,20 @@
         .card-container { position: relative; width: 100vw; max-width: 400px; height: 60vh; display: flex; align-items: center; justify-content: center; visibility: hidden; }
         
         /* Card styling */
-        .card { width: 60vw; max-width: 200px; height: 80vw; max-height: 300px; background: gray; border-radius: 8px; transition: opacity 0.5s, transform 0.5s; transform-style: preserve-3d; position: absolute; opacity: 0; }
-        .card.active { opacity: 1; animation: glow 1.5s infinite alternate, swirl 3s ease-in-out infinite; }
+        .card { width: 60vw; max-width: 200px; height: 80vw; max-height: 300px; background: gray; border-radius: 8px; transition: opacity 0.5s; transform-style: preserve-3d; position: absolute; opacity: 0; }
+        .card.active { opacity: 1; animation: glow 1.5s infinite alternate; }
         
         /* Front and back styling for the card */
         .card .front, .card .back {
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px;
         }
         .card .front { transform: rotateY(180deg); background: url('pokemon_card_backside.jpg') no-repeat center; background-size: cover; }
-        .card .back { background: url('pokemon_card_backside.jpg') no-repeat center; background-size: cover; }
+        .card .back { background: url('https://via.placeholder.com/100x150?text=Back') no-repeat center; background-size: cover; }
         
         /* Glowing SSR effect */
         @keyframes glow {
             0% { box-shadow: 0 0 10px gold; }
             100% { box-shadow: 0 0 30px gold, 0 0 50px orange; }
-        }
-        
-        /* Swirling effect */
-        @keyframes swirl {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(10deg); }
-            100% { transform: rotate(-10deg); }
         }
         
         /* Glitter effect */
