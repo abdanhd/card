@@ -30,9 +30,9 @@
         }
         .card-wrapper {
             position: absolute;
-            top: 0;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) scale(0.5);
+            transform: translate(-50%, -50%) scale(0.5);
             opacity: 0;
             perspective: 1000px;
             transition: opacity 0.6s, transform 0.6s;
@@ -43,7 +43,6 @@
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.6s;
-            animation: pulseGlow 1.5s infinite alternate ease-in-out;
         }
         .card .front, .card .back {
             position: absolute;
@@ -62,17 +61,39 @@
         .card.flipped {
             transform: rotateY(180deg);
         }
-        .card.glow {
-            opacity: 1;
-            transform: translateX(-50%) scale(1);
+        @keyframes spinCard {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(720deg);
+            }
         }
         @keyframes pulseGlow {
             0% {
-                box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
             }
             100% {
-                box-shadow: 0 0 50px rgba(255, 255, 0, 1);
+                box-shadow: 0 0 50px rgba(255, 215, 0, 1);
             }
+        }
+        @keyframes confettiSpread {
+            0% {
+                transform: translate(0, 0) scale(0.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(1);
+                opacity: 0;
+            }
+        }
+        .confetti {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: gold;
+            opacity: 0;
+            transition: transform 2s ease-out, opacity 2s ease-out;
         }
         .tap-text {
             position: absolute;
@@ -105,15 +126,37 @@
             document.getElementById("pack").style.transform = "scale(0.5)";
             document.getElementById("pack").style.opacity = "0";
             setTimeout(() => {
-                const cardWrapper = document.getElementById("cardWrapper");
-                cardWrapper.style.opacity = "1";
-                cardWrapper.style.transform = "translateX(-50%) scale(1)";
+                const card = document.getElementById("card");
+                card.style.animation = "spinCard 1s linear";
+                document.getElementById("cardWrapper").style.opacity = "1";
+                document.getElementById("cardWrapper").style.transform = "translate(-50%, -50%) scale(1)";
+                setTimeout(() => {
+                    triggerConfetti();
+                    setTimeout(() => {
+                        card.style.animation = "pulseGlow 1.5s infinite alternate ease-in-out";
+                    }, 2000);
+                }, 1000);
             }, 600);
         }
 
         function flipCard() {
             const card = document.getElementById("card");
             card.classList.toggle("flipped");
+        }
+
+        function triggerConfetti() {
+            const cardWrapper = document.getElementById("cardWrapper");
+            for (let i = 0; i < 30; i++) {
+                let confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                cardWrapper.appendChild(confetti);
+                confetti.style.left = "50%";
+                confetti.style.top = "50%";
+                confetti.style.setProperty("--x", `${(Math.random() - 0.5) * 200}px`);
+                confetti.style.setProperty("--y", `${(Math.random() - 0.5) * 200}px`);
+                confetti.style.animation = "confettiSpread 2s ease-out";
+                setTimeout(() => confetti.remove(), 2000);
+            }
         }
     </script>
 </body>
